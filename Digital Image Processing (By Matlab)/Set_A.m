@@ -1,0 +1,63 @@
+%Task ----1 
+%------Taking Input
+a =imread(imgetfile());
+b =imread(imgetfile());
+a = imresize(a,[400,200]);
+b = imresize(b,[200,400]);
+subplot(231);imshow(a);title('Image 1');
+subplot(232);imshow(b);title('Image 2');
+%Task ----2
+%-------Adding
+[ax ,ay ,az] = size(a);
+[bx, by, bz] = size(b);
+
+cx = max(ax,bx)
+cy = max(ay,by)
+
+c= zeros(cx, cy,'uint8');
+
+for i=1:ax
+    for j=1:ay
+        c(i,j)=a(i,j);
+    end
+end
+
+for i=1:bx
+    for j=1:by
+        c(i,j)=c(i,j)+b(i,j);
+    end
+end
+
+
+subplot(233);imshow(c);title('After adding images');
+
+
+[x,y]=size(c);
+
+
+%-----------Diagonal 
+for i=1:x
+    for j=1:y
+        if (i==j || i+j==y+1 )
+            c(i,j)=0;
+        end
+        
+    end
+end
+subplot(2,3,4),imshow(c), title('After Diagonal');
+%Task ----3
+%--------Padding
+d= zeros(cx+10, cy+10,'uint8');
+for i=1:x
+    for j =1:y
+            d(i+5,j+5)=c(i,j);
+    end
+end
+
+subplot(2,3,5),imshow(d), title('After padding');
+
+%Task ----4----Histogram 
+subplot(2,3,6);imhist(c);title('Histogram of Adding Image');
+
+
+
